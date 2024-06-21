@@ -47,7 +47,16 @@ router.post(
     }
 );
 
+// Log out
+router.delete(
+  '/',
+  (_req, res) => {
+    res.clearCookie('token');
+    return res.json({ message: 'success' });
+  }
+);
+
 module.exports = router;
 
 
-// jdYJVgm6-7YcTR3dhsG7eTHicgfD0-r0gKIo
+// FGhF8iuU-52zxgvpLk9CFSGorevyNfrs5bsU
