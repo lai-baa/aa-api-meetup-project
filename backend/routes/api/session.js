@@ -58,5 +58,3 @@ router.delete(
 
 module.exports = router;
 
-
-// FGhF8iuU-52zxgvpLk9CFSGorevyNfrs5bsU
