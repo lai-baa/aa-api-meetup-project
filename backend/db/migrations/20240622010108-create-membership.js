@@ -1,5 +1,11 @@
 'use strict';
-/** @type {import('sequelize-cli').Migration} */
+// /** @type {import('sequelize-cli').Migration} */
+
+let options = {};
+if (process.env.NODE_ENV === 'production') {
+  options.schema = process.env.SCHEMA;  // define your schema in options object
+};
+
 module.exports = {
   async up(queryInterface, Sequelize) {
     await queryInterface.createTable('Memberships', {
@@ -10,13 +16,26 @@ module.exports = {
         type: Sequelize.INTEGER
       },
       userId: {
-        type: Sequelize.INTEGER
+        type: Sequelize.INTEGER,
+        allowNull: false,
+        references: {
+          model: 'Users',
+          key: 'id'
+        },
+        onDelete: 'CASCADE'
       },
       groupId: {
-        type: Sequelize.INTEGER
+        type: Sequelize.INTEGER,
+        allowNull: false,
+        references: {
+          model: 'Groups',
+          key: 'id'
+        },
+        onDelete: 'CASCADE'
       },
       status: {
-        type: Sequelize.ENUM
+        type: Sequelize.ENUM('co-host', 'member', 'pending'),
+        allowNull: false,
       },
       createdAt: {
         allowNull: false,
@@ -29,6 +48,7 @@ module.exports = {
     });
   },
   async down(queryInterface, Sequelize) {
-    await queryInterface.dropTable('Memberships');
+    options.tableName = "Memberships";
+    return queryInterface.dropTable(options);
   }
 };
