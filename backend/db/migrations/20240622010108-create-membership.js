@@ -20,18 +20,18 @@ module.exports = {
         allowNull: false,
         references: {
           model: 'Users',
-          key: 'id'
+          // key: 'id'
         },
-        onDelete: 'CASCADE'
+        // onDelete: 'CASCADE'
       },
       groupId: {
         type: Sequelize.INTEGER,
         allowNull: false,
         references: {
           model: 'Groups',
-          key: 'id'
+          // key: 'id'
         },
-        onDelete: 'CASCADE'
+        // onDelete: 'CASCADE'
       },
       status: {
         type: Sequelize.ENUM('co-host', 'member', 'pending'),
@@ -39,11 +39,13 @@ module.exports = {
       },
       createdAt: {
         allowNull: false,
-        type: Sequelize.DATE
+        type: Sequelize.DATE,
+        defaultValue: Sequelize.literal("CURRENT_TIMESTAMP")
       },
       updatedAt: {
         allowNull: false,
-        type: Sequelize.DATE
+        type: Sequelize.DATE,
+        defaultValue: Sequelize.literal("CURRENT_TIMESTAMP")
       }
     });
   },

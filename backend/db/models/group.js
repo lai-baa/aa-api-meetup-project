@@ -11,6 +11,25 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
+      Group.hasMany(models.User, {
+        foreignKey: 'organizerId', 
+        onDelete: 'CASCADE',
+        hooks: true
+      });
+
+      Group.hasMany(models.Event, {
+        foreignKey: 'groupId', 
+        onDelete: 'CASCADE',
+        hooks: true
+      });
+
+      Group.belongsToMany(
+        models.User,
+        { through: models.Membership,
+          foreignKey: 'groupId',
+          otherKey: 'userId'
+        }
+      );
     }
   }
   Group.init({
@@ -33,7 +52,7 @@ module.exports = (sequelize, DataTypes) => {
       }
     },
     type: {
-      type: DataTypes.ENUM,
+      type: DataTypes.ENUM('Online', 'In person'),
       allowNull: false,
       validate: {
         typeValidation(val) {

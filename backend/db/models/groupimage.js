@@ -2,6 +2,7 @@
 const {
   Model
 } = require('sequelize');
+
 module.exports = (sequelize, DataTypes) => {
   class GroupImage extends Model {
     /**
@@ -11,12 +12,33 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
+      GroupImage.belongsTo(models.Group, {
+        foreignKey: 'groupId', 
+        // onDelete: 'CASCADE' 
+      });
     }
-  }
+  };
+
   GroupImage.init({
-    groupId: DataTypes.INTEGER,
-    url: DataTypes.STRING,
-    preview: DataTypes.BOOLEAN
+    groupId: {
+      type: DataTypes.INTEGER,
+      allowNull: false
+    },
+    url: {
+      type: DataTypes.STRING,
+      allowNull: false
+    },
+    preview: {
+      type: DataTypes.BOOLEAN,
+      allowNull: false,
+      validate: {
+        groupImageValidate(val){
+          if(val !== true || val !== false){
+            throw new Error('Preview field must be true or false');
+          }
+        }
+      }
+    }
   }, {
     sequelize,
     modelName: 'GroupImage',
