@@ -31,7 +31,7 @@ module.exports = {
       lng: -122.4194
     },
     {
-      groupId: 2,
+      groupId: 1,
       address: '456 Book Road',
       city: 'New York',
       state: 'NY',
@@ -39,7 +39,7 @@ module.exports = {
       lng: -74.0060
     },
     {
-      groupId: 3,
+      groupId: 2,
       address: '789 Fitness Ave',
       city: 'Los Angeles',
       state: 'CA',
@@ -47,7 +47,7 @@ module.exports = {
       lng: -118.2437
     },
     {
-      groupId: 4,
+      groupId: 2,
       address: '101 Art Blvd',
       city: 'Chicago',
       state: 'IL',
@@ -55,7 +55,7 @@ module.exports = {
       lng: -87.6298
     },
     {
-      groupId: 5,
+      groupId: 3,
       address: '202 Music Ln',
       city: 'Austin',
       state: 'TX',

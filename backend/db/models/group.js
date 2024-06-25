@@ -1,7 +1,7 @@
 'use strict';
-const {
-  Model
-} = require('sequelize');
+
+const { Model, Validator } = require('sequelize');
+
 module.exports = (sequelize, DataTypes) => {
   class Group extends Model {
     /**
@@ -11,13 +11,17 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
-      Group.hasMany(models.User, {
+      Group.belongsTo(models.User, {
         foreignKey: 'organizerId', 
+      });
+
+      Group.hasMany(models.Event, {
+        foreignKey: 'groupId', 
         onDelete: 'CASCADE',
         hooks: true
       });
 
-      Group.hasMany(models.Event, {
+      Group.hasMany(models.Venue, {
         foreignKey: 'groupId', 
         onDelete: 'CASCADE',
         hooks: true
