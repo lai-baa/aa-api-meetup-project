@@ -21,7 +21,7 @@ module.exports = {
      *   isBetaMember: false
      * }], {});
     */
-    await queryInterface.bulkCreate([
+    await Membership.bulkCreate([
       {
         userId: 1,
         groupId: 1,

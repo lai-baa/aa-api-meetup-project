@@ -67,13 +67,6 @@ module.exports = (sequelize, DataTypes) => {
     type: {
       type: DataTypes.ENUM('Online', 'In Person'),
       allowNull: false,
-      validate: {
-        typeValidator(val){
-          if(val !== 'Online' || val !== 'In Person'){
-            throw new Error("Type must be Online or In Person")
-          }
-        }
-      }
     },
     capacity: {
       type: DataTypes.INTEGER,
@@ -87,11 +80,7 @@ module.exports = (sequelize, DataTypes) => {
       allowNull: false,
       validate: {
         isDecimal: true,
-        priceValidator(val){
-          if(val < 0){
-            throw new Error("Price is invalid")
-          }
-        }
+        min: 0
       }
     },
     startDate: {
@@ -105,7 +94,11 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.DATE,
       allowNull: false,
       validate: {
-        isBefore: this.startDate
+        isAfterStartDate(value) {
+          if (value <= this.startDate) {
+            throw new Error('End date must be after the start date');
+          }
+        }
       }
     }
   }, {

@@ -21,7 +21,7 @@ module.exports = {
      *   isBetaMember: false
      * }], {});
     */
-    await queryInterface.bulkCreate([
+    await EventImage.bulkCreate([
       {
         eventId: 1,
         url: 'https://example.com/event1-1.jpg',

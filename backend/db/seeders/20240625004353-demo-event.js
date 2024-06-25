@@ -21,7 +21,7 @@ module.exports = {
      *   isBetaMember: false
      * }], {});
     */
-    await queryInterface.bulkCreate([
+    await Event.bulkCreate([
       {
         venueId: 1,
         groupId: 1,

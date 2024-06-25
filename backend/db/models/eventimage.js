@@ -29,13 +29,6 @@ module.exports = (sequelize, DataTypes) => {
     preview: {
       type: DataTypes.BOOLEAN,
       allowNull: false,
-      validate: {
-        groupImageValidate(val){
-          if(val !== true || val !== false){
-            throw new Error('Preview field must true or false');
-          }
-        }
-      }
     }
   }, {
     sequelize,

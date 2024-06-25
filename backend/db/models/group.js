@@ -58,24 +58,10 @@ module.exports = (sequelize, DataTypes) => {
     type: {
       type: DataTypes.ENUM('Online', 'In person'),
       allowNull: false,
-      validate: {
-        typeValidation(val) {
-          if(val !== 'Online' || val !== 'In person'){
-            throw new Error("Type must be 'Online' or 'In person'");
-          }
-        }
-      }
     },
     private: {
       type: DataTypes.BOOLEAN,
       allowNull: false,
-      validate: {
-        privateValidator(val){
-          if(val !== true || val !== false){
-            throw new Error("Private must be a boolean");
-          }
-        }
-      }
     },
     city: {
       type: DataTypes.STRING,

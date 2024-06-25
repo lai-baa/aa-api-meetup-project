@@ -21,7 +21,7 @@ module.exports = {
      *   isBetaMember: false
      * }], {});
     */
-   await queryInterface.bulkCreate([
+   await GroupImage.bulkCreate([
       {
         groupId: 1,
         url: 'https://example.com/group1-1.jpg',

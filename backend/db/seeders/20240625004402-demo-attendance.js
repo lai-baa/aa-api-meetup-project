@@ -21,7 +21,7 @@ module.exports = {
      *   isBetaMember: false
      * }], {});
     */
-    await queryInterface.bulkCreate([
+    await Attendance.bulkCreate([
       {
         eventId: 1,
         userId: 1,
