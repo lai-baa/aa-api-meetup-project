@@ -14,11 +14,11 @@ const validateSignup = [
     check('email')
       .exists({ checkFalsy: true })
       .isEmail()
-      .withMessage('Please provide a valid email.'),
+      .withMessage('Invalid email. Please provide a valid email.'),
     check('username')
       .exists({ checkFalsy: true })
       .isLength({ min: 4 })
-      .withMessage('Please provide a username with at least 4 characters.'),
+      .withMessage('Username is required. Please provide a username with at least 4 characters.'),
     check('username')
       .not()
       .isEmail()
@@ -29,20 +29,22 @@ const validateSignup = [
       .withMessage('Password must be 6 characters or more.'),
     check('firstName')
       .exists({ checkFalsy: true })
-      .withMessage('Please provide a first name.'),
+      .withMessage('First Name is required.'),
     check('lastName')
       .exists({ checkFalsy: true })
-      .withMessage('Please provide a last name.'),
+      .withMessage('Last Name is required.'),
     handleValidationErrors
 ];
 
 
 // Sign up
 router.post(
-    '/',
-    validateSignup,
-    async (req, res) => {
-      const { firstName, lastName, email, password, username } = req.body;
+  '/',
+  validateSignup,
+  async (req, res, next) => {
+    const { firstName, lastName, email, password, username } = req.body;
+    
+    try {
       const hashedPassword = bcrypt.hashSync(password);
       const user = await User.create({ firstName, lastName, email, username, hashedPassword });
   
@@ -59,9 +61,32 @@ router.post(
       return res.json({
         user: safeUser
       });
+    } catch (error) {
+      if (error.name === 'SequelizeUniqueConstraintError') {
+        const errors = {};
+        error.errors.forEach((err) => {
+          errors[err.path] = `User with that ${err.path} already exists`;
+        });
+
+        return res.status(500).json({
+          message: 'User already exists',
+          errors
+        });
+      } else if (error.name === 'SequelizeValidationError') {
+        const errors = {};
+        error.errors.forEach((err) => {
+          errors[err.path] = err.message;
+        });
+
+        return res.status(400).json({
+          message: 'Bad Request',
+          errors
+        });
+      }
+
+      next(error);
     }
+  }
 );
 
 module.exports = router;
-
-// qZy81WS2-CwHaY92iIJkRnfN4XXbcPwzsXA4
