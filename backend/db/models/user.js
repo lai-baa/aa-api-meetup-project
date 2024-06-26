@@ -15,7 +15,8 @@ module.exports = (sequelize, DataTypes) => {
         models.Group,
         { through: models.Membership,
           foreignKey: 'userId',
-          otherKey: 'groupId'
+          otherKey: 'groupId',
+          as: 'Groups'
         }
       );
       
@@ -23,7 +24,8 @@ module.exports = (sequelize, DataTypes) => {
         models.Event,
         { through: models.Attendance,
           foreignKey: 'userId',
-          otherKey: 'eventId'
+          otherKey: 'eventId',
+          as: 'Events'
         }
       );
 
@@ -32,6 +34,8 @@ module.exports = (sequelize, DataTypes) => {
         onDelete: 'CASCADE',
         hooks: true
       });
+
+      User.hasMany(models.Membership, { foreignKey: 'userId' }); // Add this line
     }
   }
   User.init({
